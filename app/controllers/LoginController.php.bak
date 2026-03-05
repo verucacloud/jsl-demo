@@ -1,0 +1,30 @@
+<?php
+
+class LoginController extends Controller {
+
+    // Menampilkan halaman login
+    public function index() {
+        $data['judul'] = 'Halaman Login';
+        $this->view('login/index', $data);
+    }
+
+    // Fungsi untuk memproses login & bypass demo
+    public function login_proses() {
+        $user = $_POST['username'];
+        $pass = $_POST['password'];
+
+        // LOGIKA BYPASS UNTUK DEMO GITHUB
+        if ($user == 'admin' && $pass == 'admin123') {
+            $_SESSION['user_admin'] = 'Demo User';
+            header('Location: ' . BASEURL . '/dashboard');
+            exit;
+        }
+
+        // Jika bukan bypass, cek ke Database via Model
+        if ($this->model('User_model')->cekLogin($user, $pass)) {
+            header('Location: ' . BASEURL . '/dashboard');
+        } else {
+            header('Location: ' . BASEURL . '/login');
+        }
+    }
+}

@@ -1,0 +1,88 @@
+</div> <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // 1. DataTables
+            if ($('#table1').length > 0) {
+                $('#table1').DataTable({ 
+                    responsive: true 
+                });
+            }
+
+            // 2. Data dari PHP dengan proteksi angka
+            const masuk = Number("<?= $data['total_pemasukan'] ?? 0 ?>") || 0;
+            const keluar = Number("<?= $data['total_pengeluaran'] ?? 0 ?>") || 0;
+            const sisa = Number("<?= $data['sisa_saldo'] ?? 0 ?>") || 0;
+
+            // 3. Doughnut Chart (Perbandingan)
+            const elPie = document.getElementById('pieChart');
+            if (elPie) {
+                // Bersihkan instance lama jika ada
+                const chartPie = Chart.getChart(elPie);
+                if (chartPie) chartPie.destroy();
+
+                new Chart(elPie, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Pendapatan', 'Pengeluaran', 'Sisa'],
+                        datasets: [{
+                            data: [masuk, keluar, sisa],
+                            backgroundColor: ['#435ebe', '#eb4432', '#198754'],
+                            borderWidth: 0,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false, // Menghindari efek "menarik" halaman
+                        cutout: '70%',
+                        plugins: {
+                            legend: { 
+                                position: 'bottom',
+                                display: true 
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 4. Line Chart (Trend Mingguan)
+            const elLine = document.getElementById('lineChart');
+            if (elLine) {
+                const chartLine = Chart.getChart(elLine);
+                if (chartLine) chartLine.destroy();
+
+                new Chart(elLine, {
+                    type: 'line',
+                    data: {
+                        labels: ['7 hr lalu', '6 hr lalu', '5 hr lalu', '4 hr lalu', '3 hr lalu', '2 hr lalu', '1 hr lalu'],
+                        datasets: [{
+                            label: 'Pendapatan',
+                            data: [0, 0, 0, 5000000, 2000000, 8000000, 3000000], 
+                            borderColor: '#435ebe',
+                            backgroundColor: 'rgba(67, 94, 190, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { 
+                            legend: { display: false } 
+                        },
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

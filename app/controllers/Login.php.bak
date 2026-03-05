@@ -1,0 +1,9 @@
+<?php 
+// app/controllers/Login.php
+class Login extends Controller {
+    public function index() {
+        $data['judul'] = 'Login - PT. Jalur Sutra Logistik';
+        // Memanggil view login (tanpa header/footer umum jika ingin full screen)
+        $this->view('login/index', $data);
+    }
+}

@@ -1,0 +1,63 @@
+<div class="container-fluid px-4 mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="fw-bold text-dark mb-0">Daftar Kas Masuk JSL</h3>
+            <p class="text-muted small">Monitoring data keuangan logistik secara real-time.</p>
+        </div>
+        <button type="button" class="btn btn-primary px-4 shadow-sm" style="border-radius: 10px;" data-bs-toggle="modal" data-bs-target="#modalTambah">
+            <i class="fas fa-plus-circle me-2"></i> Tambah Kas
+        </button>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-5" style="border-radius: 15px;">
+        <div class="card-body p-4"> <div class="table-responsive"> <table class="table table-hover align-middle" id="table1" style="width:100%">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="py-3 ps-3">NO</th>
+                            <th class="py-3">TANGGAL</th>
+                            <th class="py-3">JUMLAH NOMINAL</th>
+                            <th class="py-3 pe-3">KATEGORI SUMBER</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1; foreach($data['pemasukan'] as $row) : ?>
+                        <tr>
+                            <td class="ps-3 fw-bold"><?= $i++; ?></td>
+                            <td>
+                                <span class="badge bg-light text-primary border p-2" style="border-radius: 6px;">
+                                    <i class="far fa-calendar-alt me-1"></i> <?= date('d-m-Y', strtotime($row['tgl_pemasukan'])); ?>
+                                </span>
+                            </td>
+                            <td class="fw-bold">Rp <?= number_format($row['jumlah'], 0, ',', '.'); ?></td>
+                            <td class="pe-3">
+                                <span class="d-inline-block bg-primary rounded-circle me-2" style="width: 8px; height: 8px;"></span>
+                                <?php 
+                                    $sumber = [
+                                        1 => 'Biaya Pengiriman', 2 => 'Biaya Pengiriman', 
+                                        3 => 'Handling Fee', 4 => 'Biaya Administrasi Dokumen',
+                                        5 => 'Jasa Pengurusan Bea Cukai', 6 => 'Asuransi', 7 => 'Biaya Tambahan Lain'
+                                    ];
+                                    echo $sumber[$row['id_sumber']] ?? 'Lainnya';
+                                ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Tambahan agar bayangan shadow-sm tidak terpotong */
+    .card {
+        margin: 10px 5px; 
+    }
+    
+    /* Menghilangkan garis tepi tabel yang berlebihan */
+    .table > :not(caption) > * > * {
+        border-bottom-width: 1px;
+        border-color: #f0f0f0;
+    }
+</style>

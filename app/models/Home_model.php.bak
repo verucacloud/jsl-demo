@@ -1,0 +1,54 @@
+<?php 
+
+class Home_model {
+    private $db;
+
+    public function __construct() {
+        $this->db = new Database;
+    }
+
+    public function getTotalPemasukan() {
+        // Menghitung total jumlah dari tabel pemasukan
+        $this->db->query("SELECT SUM(jumlah) as total FROM pemasukan");
+        $result = $this->db->single();
+        return $result['total'] ?? 0;
+    }
+
+    public function getTotalPengeluaran() {
+        // Nantinya dihubungkan ke tabel pengeluaran
+        $this->db->query("SELECT SUM(jumlah) as total FROM pengeluaran");
+        $result = $this->db->single();
+        return $result['total'] ?? 0;
+    }
+
+    // Fitur 2: Total Hutang
+    public function getTotalHutang() {
+        $this->db->query("SELECT SUM(jumlah) as total FROM hutang");
+        $res = $this->db->single();
+        return $res['total'] ?? 0;
+    }
+
+    // Fitur 3: Operasional Armada (BBM, Tol, Sewa, Servis)
+    public function getBiayaArmada() {
+        $this->db->query("SELECT SUM(jumlah) as total FROM pengeluaran WHERE id_sumber IN (8, 9, 10, 16)");
+        $res = $this->db->single();
+        return $res['total'] ?? 0;
+    }
+
+    // Fitur 4 & 6: Data Karyawan
+    public function getJumlahKaryawan() {
+        $this->db->query("SELECT COUNT(*) as total FROM karyawan");
+        $res = $this->db->single();
+        return $res['total'] ?? 0;
+    }
+
+    // Fitur 5: Laporan Grafik (Ini yang tadi menyebabkan error)
+    public function getGrafikPemasukan() {
+        // Mengambil data pemasukan 7 hari terakhir secara otomatis
+        $this->db->query("SELECT tgl_pemasukan, SUM(jumlah) as total 
+                          FROM pemasukan 
+                          GROUP BY tgl_pemasukan 
+                          ORDER BY tgl_pemasukan DESC LIMIT 7");
+        return $this->db->resultSet();
+    }
+}

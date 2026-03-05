@@ -1,0 +1,65 @@
+/* Font Setup */
+body {
+    font-family: 'Poppins', sans-serif;
+    /* Ubah dari hidden menjadi auto agar bisa scroll saat konten panjang */
+    overflow-y: auto; 
+    background-color: #f4f7fe;
+}
+
+/* Background dengan animasi gradasi halus */
+.bg-login {
+    background: linear-gradient(-45deg, #1d2671, #c33764, #1d2671);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Kartu Login Modern */
+.card-login {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.logo-wrapper img {
+    max-height: 80px;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
+}
+
+/* Input Minimalis (Floating Labels) */
+.custom-input {
+    border: none;
+    border-bottom: 2px solid #eee;
+    border-radius: 0;
+    padding-left: 0;
+    transition: all 0.3s ease;
+}
+
+.custom-input:focus {
+    box-shadow: none;
+    border-bottom-color: #c33764;
+}
+
+/* Tombol dengan Efek Hover */
+.btn-animate {
+    background: linear-gradient(to right, #1d2671, #c33764);
+    border: none;
+    border-radius: 50px;
+    letter-spacing: 1px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-animate:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(195, 55, 100, 0.3);
+}
+
+.tracking-wider {
+    letter-spacing: 2px;
+    font-size: 0.7rem;
+}
