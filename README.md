@@ -9,7 +9,7 @@ Aplikasi manajemen inventaris dan keuangan sederhana yang dibangun menggunakan a
 
 | Login Page | Dashboard Admin |
 |---|---|
-| ![Login](https://via.placeholder.com/400x250?text=Screenshot+Login) | ![Dashboard](https://via.placeholder.com/400x250?text=Screenshot+Dashboard) |
+| ![Login](assets/login.png) | ![Dashboard](assets/beranda.png) |
 
 *(Tips: Ganti link gambar di atas dengan file screenshot yang Anda upload ke folder 'assets')*
 
